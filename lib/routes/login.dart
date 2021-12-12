@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:projedeneme/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:projedeneme/routes/feedView.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 
 
 class Login extends StatefulWidget {
@@ -192,6 +194,8 @@ class _LoginState extends State<Login> {
 
 
                               auth.loginWithMailAndPass(mail, pass);
+
+                              FirebaseCrashlytics.instance.setUserIdentifier(mail);
 
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(

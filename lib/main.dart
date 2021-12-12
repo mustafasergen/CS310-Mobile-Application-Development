@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:projedeneme/routes/welcome.dart';
 import 'package:projedeneme/routes/signup.dart';
@@ -10,18 +12,22 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:provider/provider.dart';
 import 'package:projedeneme/services/auth.dart';
-import 'package:projedeneme/routes/feedView.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 
 
 
 
 
-Future main() async{
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+void main() async {
+  runZonedGuarded<Future<void>>(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+    // The following lines are the same as previously explained in "Handling uncaught errors"
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-  runApp(MyFirebaseApp());
+    runApp(MyFirebaseApp());
+  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 
 class MyFirebaseApp extends StatefulWidget {

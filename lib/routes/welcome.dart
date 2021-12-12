@@ -11,7 +11,7 @@ import 'package:projedeneme/services/auth.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:projedeneme/services/analytics.dart';
-
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 
 
@@ -75,7 +75,11 @@ class _WelcomeState extends State<Welcome> {
                       child: OutlinedButton(
                         onPressed: () {
                           setCurrentScreen(widget.analytics, 'Signup', 'signup.dart');
+
+                          //FirebaseCrashlytics.instance.crash();
+                          FirebaseCrashlytics.instance.log("Team 8 detected! Bailing out");
                           Navigator.pushNamed(context, '/signup');
+                          throw Error();
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -97,7 +101,10 @@ class _WelcomeState extends State<Welcome> {
                       child: OutlinedButton(
                         onPressed: () {
                           setCurrentScreen(widget.analytics, 'Login', 'login.dart');
+
                           Navigator.pushNamed(context, '/login');
+                          FirebaseCrashlytics.instance.log("Higgs-Boson detected! Bailing out");
+                          throw Error();
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12.0),
